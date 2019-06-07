@@ -1,4 +1,5 @@
-from flask import Flask,request,jsonify,render_template
+from flask import Flask,request,jsonify,render_template,redirect
+from bson import ObjectId
 from flask_pymongo import PyMongo
 
 app = Flask(__name__)
@@ -17,7 +18,7 @@ def tweets():
         output = []
 
         for tweet in tweets.find():
-            output.append({'Tweet' : tweet['tweet']})
+            output.append({'Tweet' : tweet['tweet'],'id' : tweet['_id']})
 
         return render_template('tweets.html',tweets=output)
         
@@ -32,7 +33,7 @@ def tweets():
         for tweet in tweets.find():
             output.append({'Tweet' : tweet['tweet']})
 
-        return render_template('tweets.html',tweets=output)
+        return redirect('/tweets')
 
     if request.method == 'PUT':    
         
@@ -43,17 +44,16 @@ def tweets():
         result = tweets.find_one({"tweet": tweet})
         output = {'Updated Tweet' : result['tweet']}
 
-        return jsonify({'Tweet' : output})  
-
-    if request.method == 'DELETE':    
+        return jsonify({'Tweet' : output}) 
         
-        tweets = mongo.db.tweets
-        tweet = request.json['tweet']
-        tweets.delete_one({"tweet": tweet})
 
-        output = {'Tweet' : tweet}
-
-        return jsonify({'Deleted Tweet' : output}) 
+@app.route("/delete")  
+def remove ():  
+    #Deleting a Task with various references  
+    tweets = mongo.db.tweets
+    key = request.values.get('_id')
+    tweets.delete_one({"_id": ObjectId(key)})
+    return redirect('/tweets')
 
 if __name__ == "__main__":
     app.run(debug=True)

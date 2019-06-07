@@ -9,18 +9,21 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" />
+    <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">    
     <title>Tweets</title>
 </head>
-<body>
-    <div class="jumbotron d-flex flex-column justify-content-center">
+<body style="font-family:'Quicksand', sans-serif;">
+    <div class="jumbotron d-flex flex-column justify-content-center"  style="background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);">
         <h1 class="display-5 m-3">Recent Tweets:</h1>
         <div class="row">
             <div class="col-sm">
             {% for data in tweets %}
-                <div class="card w-50 m-3">
+                <div class="card w-100 m-1 mt-2">
                     <div class="card-body">
                     <p class="lead">{{data.Tweet}}</p>
-                    <button class="btn btn-danger m-2" type="submit">Delete</button>
+                    <a href="./delete?_id={{ data['id'] }}">
+                        <button class="btn btn-danger m-2" type="submit">Delete</button>
+                    </a>
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#updatetweet">Update</button>
                 </div>
                 </div>
@@ -28,8 +31,8 @@
         </div>
         <div class="col-sm">
             <form action="/tweets" method="POST">
-                    <div class="form-group m-3">
-                      <input type="text" class="w-50 form-control" name="tweet" placeholder="Tweet">
+                    <div class="form-group m-3 mt-5">
+                      <input type="text" class="w-75 form-control" name="tweet" placeholder="Tweet">
                     <button class="btn btn-primary mt-3 p-2 px-4" type="submit">tweet <i class="ml-2 fab fa-twitter"></i></button>
                 </div>
             </form>
