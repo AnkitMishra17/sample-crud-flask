@@ -1,31 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" />
-    <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">    
-    <title>Tweets</title>
-</head>
-<body style="font-family:'Quicksand', sans-serif;">
-    <div class="jumbotron d-flex flex-column justify-content-center"  style="background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);">
+{% extends 'layout.html' %} 
+  {% block content %}
         <h1 class="display-5 m-3">Recent Tweets:</h1>
         <div class="row">
             <div class="col-sm">
             {% for data in tweets %}
                 <div class="card w-100 m-1 mt-2">
                     <div class="card-body">
-                    <p class="lead">{{data.Tweet}}</p>
-                    <a href="./delete?_id={{ data['id'] }}">
-                        <button class="btn btn-danger m-2" type="submit">Delete</button>
-                    </a>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#updatetweet">Update</button>
-                </div>
+                        <p class="lead">{{data.Tweet}}</p>
+                        <a href="./delete?_id={{ data['id'] }}">
+                            <button class="btn btn-danger m-2" type="submit">Delete</button>
+                        </a>
+                        <a href="./update1?_id={{ data['id'] }}">
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#updatetweet">Update</button>
+                        </a>
+                    </div>
                 </div>
             {% endfor %}
         </div>
@@ -37,30 +25,5 @@
                 </div>
             </form>
         </div>    
-        </div>
     </div>
-    <div class="modal fade" id="updatetweet" tabindex="-1" role="dialog" aria-labelledby="updatetweet" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="updatetweet">Update Tweet</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-            <form action="/tweets" method="PUT">
-                <div class="form-group m-3">
-                  <input type="text" class="w-50 form-control" name="updatetweet" placeholder="Tweet">
-                  <button class="btn btn-primary mt-3 p-2 px-4" type="submit">Update tweet <i class="ml-2 fab fa-twitter"></i></button>
-                </div>
-            </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-</body>
-</html>
+    {% endblock content%}

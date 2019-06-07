@@ -1,0 +1,13 @@
+{% extends 'layout.html' %} 
+  
+  {% block content %}
+    <form action="/update" method="POST">
+        <div class="form-group m-3 mt-5">    
+            {% for up in Update %}
+                 <input type="text" name="_id" value="{{ up['_id'] }}" hidden>
+            {% endfor %}
+            <input type="text" class="w-75 form-control" name="updatetweet" placeholder="Update Tweet">
+            <button class="btn btn-primary mt-3 p-2 px-4" type="submit">tweet <i class="ml-2 fab fa-twitter"></i></button>
+        </div>
+    </form>
+  {% endblock content %}
